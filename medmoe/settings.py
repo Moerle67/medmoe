@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'medmoeapp1.apps.Medmoeapp1Config',
 ]
 
 MIDDLEWARE = [
