@@ -72,7 +72,7 @@ class Bestellung(models.Model):
         ordering = ['-bestell_datum']
 
     def __str__(self):
-        return f"{self.bezeichnung} - {self.arzt} ({self.bestell_datum})"
+        return f"{self.kunde}: {self.bezeichnung} - {self.arzt} ({self.bestell_datum})"
 
     def get_absolute_url(self):
         return reverse("Bestellungdetail", kwargs={"pk": self.pk})

@@ -102,7 +102,24 @@ def generate_pdf(request, bestellung):
             zeile += 1
             
     zeile+=1
-    
+
+    if len(ds_ueber) > 0:
+        if len(ds_med)==0:    
+            p.drawString(kante_links, height-(start+zeile*step)*mm, "Sehr geehrte Damen und Herren,")
+            zeile += 1
+            p.drawString(kante_links, height-(start+zeile*step)*mm, f"hiermit bitte ich Sie um folgende {word_ueber}:")
+            zeile += 1
+        else:
+            p.drawString(kante_links, height-(start+zeile*step)*mm, f"Außerdem benötige ich folgende {word_ueber}:")
+            zeile += 1
+        for ueberweisung in ds_ueber:
+            p.drawString(kante_links+5, height-(start+zeile*step)*mm, f"- {ueberweisung.details}")
+            zeile += 1
+    zeile +=2
+    p.drawString(kante_links, height-(start+zeile*step)*mm, "Mit besten Grüßen,")
+    zeile +=2
+    p.drawString(kante_links, height-(start+zeile*step)*mm, ds.kunde.name)
+
 
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
