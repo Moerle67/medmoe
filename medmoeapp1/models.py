@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Kontakt(models.Model):
-    name = models.CharField(verbose_name="Name", max_length=50)
-    zeile1 = models.CharField(verbose_name="1. Adresszeile (Name)", max_length=50, primary_key=True)
+    name = models.CharField(verbose_name="Name", max_length=50, primary_key=True)
+    zeile1 = models.CharField(verbose_name="1. Adresszeile (Name)", max_length=50)
     zeile2 = models.CharField(verbose_name="2. Adresszeile (Straße)", max_length=50)
     zeile3 = models.CharField(verbose_name="3. Adresszeile (PLZ Ort)", max_length=50)
     zeile4 = models.CharField(verbose_name="4. Adresszeile", max_length=50, blank=True)
