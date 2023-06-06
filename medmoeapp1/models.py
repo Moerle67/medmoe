@@ -28,9 +28,7 @@ class Medikament(models.Model):
     details = models.CharField(verbose_name="Details", max_length=100)
     beschreibung = models.TextField(verbose_name="Beschreibung", blank=True)
     menge = models.IntegerField(verbose_name="Menge in Packung")
-    einnahme = models.IntegerField(verbose_name="Regelmäßige Einnahme (Tag)")
-    letze_bestellung = models.DateField(verbose_name="Letzte Bestellung", auto_now=False, auto_now_add=True)
-
+    
     class Meta:
         verbose_name = "Medikament"
         verbose_name_plural = "Medikamente"
@@ -44,14 +42,14 @@ class Medikament(models.Model):
 class Ueberweisung(models.Model):
     bezeichnung = models.CharField(verbose_name="Bezeichnung", max_length=50)
     details = models.CharField(verbose_name="Details", max_length=100)
-    termin = models.DateTimeField(verbose_name="Termin", auto_now=False, auto_now_add=False)
+    kontakt = models.ForeignKey(Kontakt, verbose_name="Kontakt", on_delete=models.CASCADE, blank=True)
 
     class Meta:
         verbose_name = "Ueberweisung"
         verbose_name_plural = "Ueberweisungen"
 
     def __str__(self):
-        return f"{self.bezeichnung} ({self.termin})"
+        return f"{self.bezeichnung}"
 
     def get_absolute_url(self):
         return reverse("Ueberweisung_detail", kwargs={"pk": self.pk})
@@ -60,8 +58,8 @@ class Ueberweisung(models.Model):
 class Bestellung(models.Model):
     bezeichnung = models.CharField(verbose_name="Bezeichnung", max_length=50)
     bestell_datum = models.DateField(verbose_name="Bestelldatum", auto_now=False, auto_now_add=True)
-    kunde = models.ForeignKey(Kontakt, verbose_name="Kunde", on_delete=models.RESTRICT, related_name="Kunde")
-    arzt = models.ForeignKey(Kontakt, verbose_name="Arzt", on_delete=models.RESTRICT, related_name="Arzt")
+    kunde = models.ForeignKey(Kontakt, verbose_name="Kunde", on_delete=models.RESTRICT, related_name="KundeB")
+    arzt = models.ForeignKey(Kontakt, verbose_name="Arzt", on_delete=models.RESTRICT, related_name="ArztB")
     bemerkung = models.TextField("Bemerkung", blank=True)
     medikamente = models.ManyToManyField(Medikament, verbose_name="Medikamente", blank=True)
     ueberweisung = models.ManyToManyField(Ueberweisung, verbose_name="Überweisungen", blank=True)
@@ -76,4 +74,22 @@ class Bestellung(models.Model):
 
     def get_absolute_url(self):
         return reverse("Bestellungdetail", kwargs={"pk": self.pk})
+    
+class Termin(models.Model):
+    wer = models.ForeignKey(Kontakt, verbose_name="Wer", on_delete=models.CASCADE, related_name="KundeT")
+    wo = models.ForeignKey(Kontakt, verbose_name="Bei wem", on_delete=models.CASCADE, related_name="ArztT")
+    wann = models.DateTimeField(verbose_name="Wann", auto_now=False, auto_now_add=False)
+    bemerkung = models.CharField(verbose_name="Bemerkung", max_length=100)
+    
+    class Meta:
+        verbose_name = "Termin"
+        verbose_name_plural = "Termine"
+        ordering = ['-wann']
+
+    def __str__(self):
+        return f"{self.wer} / {self.wo} - {self.wann} ({self.bemerkung})"
+
+    def get_absolute_url(self):
+        return reverse("Termin_detail", kwargs={"pk": self.pk})
+
 

@@ -9,6 +9,7 @@ from . import views
 admin.site.register(Kontakt)
 admin.site.register(Ueberweisung)
 admin.site.register(Medikament)
+admin.site.register(Termin)
 
 @admin.action(description="PDF generieren")
 def pdf_generate(modeladmin, request, queryset):

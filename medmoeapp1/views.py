@@ -120,7 +120,12 @@ def generate_pdf(request, bestellung):
     zeile +=2
     p.drawString(kante_links, height-(start+zeile*step)*mm, ds.kunde.name)
 
+    # Falzstriche
+    p.setStrokeColor([0.3, 0.3, 0.3])
+    p.line(9*mm, 190*mm, 11*mm, 190*mm)
+    p.line(9*mm, 89*mm, 11*mm, 89*mm)
 
+    p.line(9*mm, 148*mm, 14*mm, 148*mm)
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
    
