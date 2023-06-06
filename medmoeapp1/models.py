@@ -45,8 +45,8 @@ class Ueberweisung(models.Model):
     kontakt = models.ForeignKey(Kontakt, verbose_name="Kontakt", on_delete=models.CASCADE, blank=True)
 
     class Meta:
-        verbose_name = "Ueberweisung"
-        verbose_name_plural = "Ueberweisungen"
+        verbose_name = "Überweisung"
+        verbose_name_plural = "Überweisungen"
 
     def __str__(self):
         return f"{self.bezeichnung}"
