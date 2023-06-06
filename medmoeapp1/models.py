@@ -42,7 +42,7 @@ class Medikament(models.Model):
 class Ueberweisung(models.Model):
     bezeichnung = models.CharField(verbose_name="Bezeichnung", max_length=50)
     details = models.CharField(verbose_name="Details", max_length=100)
-    kontakt = models.ForeignKey(Kontakt, verbose_name="Kontakt", on_delete=models.CASCADE, blank=True)
+    kontakt = models.ForeignKey(Kontakt, verbose_name="Kontakt", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Überweisung"

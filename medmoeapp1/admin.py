@@ -14,7 +14,8 @@ admin.site.register(Termin)
 @admin.action(description="PDF generieren")
 def pdf_generate(modeladmin, request, queryset):
     for bestellung in queryset:
-        return redirect('generate_pdf', bestellung=bestellung.pk)
+#        return redirect('generate_pdf', bestellung=bestellung.pk)
+        return HttpResponseRedirect(f"/medmoe/print/{bestellung.pk}")
 
 
 class BestellungAdmin(admin.ModelAdmin):
