@@ -9,7 +9,11 @@ from . import views
 admin.site.register(Kontakt)
 admin.site.register(Ueberweisung)
 admin.site.register(Medikament)
-admin.site.register(Termin)
+# admin.site.register(Termin)
+@admin.register(Termin)
+class TerminAdmin(admin.ModelAdmin):
+    list_filter = ['wer', 'erledigt']
+
 
 @admin.action(description="PDF generieren")
 def pdf_generate(modeladmin, request, queryset):

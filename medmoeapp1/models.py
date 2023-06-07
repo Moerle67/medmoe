@@ -80,11 +80,11 @@ class Termin(models.Model):
     wo = models.ForeignKey(Kontakt, verbose_name="Bei wem", on_delete=models.CASCADE, related_name="ArztT")
     wann = models.DateTimeField(verbose_name="Wann", auto_now=False, auto_now_add=False)
     bemerkung = models.CharField(verbose_name="Bemerkung", max_length=100)
-    
+    erledigt = models.BooleanField("Erledigt", default = False)
     class Meta:
         verbose_name = "Termin"
         verbose_name_plural = "Termine"
-        ordering = ['-wann']
+        ordering = ['wann']
 
     def __str__(self):
         return f"{self.wer} / {self.wo} - {self.wann} ({self.bemerkung})"
