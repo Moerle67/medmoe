@@ -13,7 +13,9 @@ from datetime import datetime
 
 def generate_pdf(request, bestellung):
     width, height = A4
-    kante_links = 25*mm
+    kante = 4*mm
+    kante_links = 25*mm-kante
+    adress_oben = 57*mm
     locale.setlocale(locale.LC_TIME, 'de_DE.UTF-8')
 
     # Create a file-like buffer to receive PDF data.
@@ -37,16 +39,18 @@ def generate_pdf(request, bestellung):
     # Absender Adressfeld
     p.setFontSize(8)
     p.drawString(kante_links, height-55*mm, f"{ds.kunde.zeile1}, {ds.kunde.zeile2}, {ds.kunde.zeile3}")
+    
+    # Adressfeld Ziel
     # Linie
-    p.line(kante_links, height-57*mm, 100*mm, height-57*mm)
+    p.line(kante_links, height-adress_oben, 100*mm, height-57*mm)
 
     # Adresse Ziel
     p.setFontSize(11)
-    p.drawString(kante_links, height-66*mm, ds.arzt.zeile1)
-    p.drawString(kante_links, height-71*mm, ds.arzt.zeile2)
-    p.drawString(kante_links, height-76*mm, ds.arzt.zeile3)
-    p.drawString(kante_links, height-81*mm, ds.arzt.zeile4)
-    p.drawString(kante_links, height-86*mm, ds.arzt.zeile5)
+    p.drawString(kante_links, height-adress_oben-9*mm, ds.arzt.zeile1)
+    p.drawString(kante_links, height-adress_oben-14*mm, ds.arzt.zeile2)
+    p.drawString(kante_links, height-adress_oben-19*mm, ds.arzt.zeile3)
+    p.drawString(kante_links, height-adress_oben-24*mm, ds.arzt.zeile4)
+    p.drawString(kante_links, height-adress_oben-29*mm, ds.arzt.zeile5)
 
     # Adresse Kunde
     p.setFontSize(10)
@@ -122,10 +126,10 @@ def generate_pdf(request, bestellung):
 
     # Falzstriche
     p.setStrokeColor([0.3, 0.3, 0.3])
-    p.line(9*mm, 190*mm, 11*mm, 190*mm)
-    p.line(9*mm, 89*mm, 11*mm, 89*mm)
+    p.line(9*mm-kante, 190*mm, 11*mm-kante, 190*mm)
+    p.line(9*mm-kante, 89*mm, 11*mm-kante, 89*mm)
 
-    p.line(9*mm, 148*mm, 14*mm, 148*mm)
+    p.line(9*mm-kante, 148*mm, 14*mm-kante, 148*mm)
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
    
